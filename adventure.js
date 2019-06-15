@@ -89,9 +89,6 @@ window.addEventListener('load', () => {
 
 	// Quality of life
 	textarea.focus();
-
-	// debug
-	document.querySelector('#refresh').addEventListener('click', refresh);
 })
 
 // When user types anything in the command textarea
