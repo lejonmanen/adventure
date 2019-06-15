@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="./style.css">
+	<script src="./adventure.js" charset="utf-8"></script>
+	<!-- <script src="./your-script.js" charset="utf-8"></script> -->
+	<script src="./example-game.js" charset="utf-8"></script>
+	<title>Adventure</title>
+</head>
+<body>
+
+	<h1 class="error">You have a JavaScript error. Open the developer console!</h1>
+	<main>
+		<div class="topsection">
+			<section>
+				<h1 id="roomTitle">Adventure</h1>
+				<p id="roomDescription">
+					You awake standing in a small dark room. This room appears very small. Through your senses you detect that there is a <span class="keyword">door</span> right in front of you.
+				</p>
+				<p id="roomItems">There is a <span class="keyword">comb</span> here.</p>
+			</section>
+			<aside id="inventory">You are carrying: <br>
+				<ul>
+					<li class="keyword">a spoon</li>
+				</ul>
+			</aside>
+		</div>
+		<section>
+			Input command and press enter. <div class="popup-help">Help!</div>
+			<div class="popup">
+				Try entering an action and an object. For example, "get key" if there is a key lying around. Some common examples are "go out", "climb up", "look at door" and so on. Objects that you can interact with are <span class="keyword">highlighted</span>.
+			</div>
+			<textarea id="commands" rows="5"></textarea>
+		</section>
+		<section id="messages">Nothing happened.</section>
+	</main>
+	<button id="refresh">Refresh</button>
+</body>
+</html>

@@ -1,0 +1,103 @@
+:root {
+	--main-bg-color: white;
+	--main-border-color: #A9D0F5;
+	--main-border-highlight: #58ACFA;
+	--main-shadow-color: #CEECF5;
+	--main-text-color: #0B3861;
+	--keyword-text-color: #29088A;
+	--keyword-hover-color: #D0A9F5;
+	--popup-background: #F7F8E0;
+}
+
+main {
+	color: var(--main-text-color);
+	border: 2px solid var(--main-border-color);
+	background-color: var(--main-bg-color);
+/* 	border-radius: 2em; */
+	margin: 0.5em;
+	padding: 0.5em 1em;
+	box-shadow: 0px 0px 0.8em 0.8em var(--main-shadow-color);
+}
+main h1 {
+	margin-top: 0;
+}
+section, aside {
+	border: 1px solid var(--main-border-color);
+	box-shadow: 0px 0px 0.4em 0.2em var(--main-shadow-color);
+	/* border-radius: 0.5em; */
+	padding: 0.8em;
+	margin: 1.5em 0em;
+	position: relative;
+}
+section:hover, aside:hover {
+	border-color: var(--main-border-highlight);
+}
+section textarea {
+	width: 100%;
+
+}
+aside {
+	float: right;
+}
+.topsection {
+	display: flex;
+	flex-direction: row;
+	space-between
+}
+.topsection > :first-child {
+	flex: 2;
+	margin-right: 0.5em;
+}
+.topsection > :last-child {
+	flex: 1;
+	margin-left: 0.5em;
+}
+.error { color: red; }
+
+.keyword {
+	font-weight: bold;
+	color: var(--keyword-text-color);
+	text-decoration: underline;
+}
+.keyword:hover {
+	color: var(--keyword-hover-color);
+	cursor: pointer;
+}
+.echo {
+	font-weight: bold;
+	font-family: Consolas, monospace;
+}
+.echo::before { content: '> '; }
+.echo:hover { cursor: pointer; }
+
+textarea { margin-top: 0.5em; }
+.messages {}
+
+.popup-help {
+	display: inline-block;
+	color: var(--keyword-text-color);
+	position: absolute;
+	padding-bottom: -2px;
+	border-bottom: 2px dashed var(--main-border-color);
+	/* text-decoration: underline; */
+}
+.popup-help:hover {
+	cursor: help;
+	color: var(--keyword-hover-color);
+}
+.popup {
+	display: none;
+	/* display: inline-block; */
+	position: absolute;
+	top: 2em;
+	width: 16em;
+	border: 1px solid var(--main-border-color);
+	padding: 0.5em;
+	border-radius: 0.5em;
+	z-index: 1;
+	background-color: var(--popup-background);
+}
+.popup-help:hover + .popup, .popup:hover {
+	display: inline-block;
+	cursor: help;
+}
