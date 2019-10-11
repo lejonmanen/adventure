@@ -1,11 +1,12 @@
 /* Made by David Andersson, 2019-06
-Contribute to this on GitHub: repo here
-This project is made for educational purposes with the goal of teaching students JavaScript basics. It uses the MIT license. If you make something good, please consider submitting a pull request.
+Contribute to this on GitHub: https://github.com/lejonmanen/adventure
+This project is made for educational purposes with the goal of teaching students JavaScript basics. It uses the MIT license. If you make something good of it, please consider submitting a pull request.
 */
 
 /* Students: use the functions exposed by the Adventure object to build your game.
 
 */
+
 // Register Adventure as a global object that contains all the functions you should use.
 window.Adventure = {
 	addCommandHandler: handler => { settings.commandHandler = handler; },
@@ -193,9 +194,9 @@ function properArticle(word) {
 function showError(message) {
 	let el = document.querySelector('body > h1.error');
 	el.innerText = message;
-	el.style ='';
+	el.style = '';
 	throw new Error(message);
 }
 function hideError() {
-	document.querySelector('body > h1.error').style ='display: none;';
+	document.querySelector('body > h1.error').style = 'display: none;';
 }
