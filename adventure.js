@@ -4,20 +4,42 @@ This project is made for educational purposes with the goal of teaching students
 */
 
 /* Students: use the functions exposed by the Adventure object to build your game.
+Check out the files blank-game.js and example-game.js!
+When you feel ready to begin, replace the script file example-game.js in index.html (line 9) with your own game file.
 
+Global functions defined in this file:
+onCommandKeyDown
+appendMessage
+refresh
+printInventory
+printItems
+properArticle
+showError
+hideError
 */
 
-// Register Adventure as a global object that contains all the functions you should use.
+// Crete a global variable named Adventure; an object that contains all the functions you need to control the game.
 window.Adventure = {
+	// Add a callback function that is called every time the player enters a new command
 	addCommandHandler: handler => { settings.commandHandler = handler; },
+
+	// Control the carried items display
 	inventory: {
 		clear: () => settings.items = [],
 		add: itemName => settings.items.push(itemName),
 		remove: itemName => settings.items = settings.items.filter(i => i !== itemName)
 	},
+
+	// The scene represents the current room
 	scene: {
 		get: () => settings.currentScene,
 		getState: () => settings.scenes[settings.currentScene].state,
+
+		// Creates a new scene
+		// sceneId: a unique string
+		// title: what you want the heading to show
+		// description: what you want the player to know
+		// items: array of items (strings) that are in this scene from the start
 		create: (sceneId, title, description, items) => {
 			if( !sceneId || !title || !description ) {
 				showError('You must call Adventure.scene.create with proper values for the parameters sceneId, title and description. Values cannot be undefined, null or empty strings. Use console.log and typeof to find out which you used!');
@@ -26,16 +48,21 @@ window.Adventure = {
 				showError(`There already is a scene with the id "${sceneId}". Invent a new, unique id!`);
 				return;
 			}
-			settings.scenes[sceneId] = { title, description, items };
+			settings.scenes[sceneId] = { title, description, items, state: 0 };
 		},
+
+		// You can change the scene
 		modifyTitle: title => settings.scenes[settings.currentScene].title = title,
 		modifyDescription: desc => settings.scenes[settings.currentScene].description = desc,
 		modifyItems: items => settings.scenes[settings.currentScene].items = items,
+
+		// State can be used to remember if the player has changed anything in the current scene
 		setState: state => settings.scenes[settings.currentScene].state = state,
 		change: newScene => {
 			settings.currentScene = newScene;
 			refresh();
-		}
+		},
+		getDescription: () => settings.scenes[settings.currentScene].description
 	},
 	items: {
 		exist: itemName => !!(settings.scenes[settings.currentScene].items.find(i => i === itemName)),
@@ -52,25 +79,20 @@ window.Adventure = {
 			refresh();
 		},
 		drop: itemName => {
-
-		}
+			let item = settings.items.find(i => i === itemName);
+			Adventure.inventory.remove(itemName);
+			settings.items = [...settings.items, itemName];
+		},
+		all: () => settings.scenes[settings.currentScene].items
 	}
 }
+
+// The settings object stores all the data of the adventure.
+// Add scenes here using the Adventure object:
+// Adventure.scenes.create(sceneId, title, description, items)
 const settings = {
 	items: [],
-	scenes: {
-		"start": {
-			title: `Mystery room`,
-			description: `You awake standing in a small dark room. This room appears very small. Through your senses you detect that there is a <span class="keyword">door</span> right in front of you. The door is, quite obviously, closed.`,
-			items: [],
-			state: 0  // used to remember if the door has been opened or not
-		},
-		"room": {
-			title: `Room`,
-			description: `The room is brightly lit. Freedom at last! <br>Thanks for playing. Feel free to do a victory <span class="keyword">dance</span> or two. And when you're done, make your own game!`,
-			items: []
-		}
-	},
+	scenes: { },
 	currentScene: 'start'
 }
 
@@ -88,7 +110,7 @@ window.addEventListener('load', () => {
 	// Load first scene
 	refresh();
 
-	// Quality of life
+	// Quality of life - start the game with the textarea focused
 	textarea.focus();
 })
 
@@ -107,7 +129,6 @@ function onCommandKeyDown(event, textarea, messageBox) {
 	}
 	textarea.value = '';
 	appendMessage(output, input);
-	// messageBox.innerHTML = `<span class="echo">&gt; ${input}</span><br>${output}<br><br>` + messageBox.innerHTML;
 	refresh();
 }
 
@@ -137,7 +158,8 @@ function appendMessage(message, input = false) {
 function refresh() {
 	// Redraw all elements of the UI
 	const s = settings.scenes[settings.currentScene];
-	const qs = document.querySelector.bind(document);
+	if( !s ) return;
+	const qs = q => document.querySelector(q);
 	qs('#roomTitle').innerText = s.title;
 	qs('#roomDescription').innerHTML = s.description;
 	qs('#roomItems').innerHTML = printItems(s.items);

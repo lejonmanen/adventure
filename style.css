@@ -76,7 +76,7 @@ textarea { margin-top: 0.5em; }
 .popup-help {
 	display: inline-block;
 	color: var(--keyword-text-color);
-	position: absolute;
+	position: relative;
 	padding-bottom: -2px;
 	border-bottom: 2px dashed var(--main-border-color);
 	/* text-decoration: underline; */
@@ -86,18 +86,22 @@ textarea { margin-top: 0.5em; }
 	color: var(--keyword-hover-color);
 }
 .popup {
+	color: var(--main-text-color);
 	display: none;
 	/* display: inline-block; */
 	position: absolute;
-	top: 2em;
+	left: 0px;
+	top: 1.3em;
 	width: 16em;
+	height: 2em;
 	border: 1px solid var(--main-border-color);
 	padding: 0.5em;
 	border-radius: 0.5em;
 	z-index: 1;
 	background-color: var(--popup-background);
 }
-.popup-help:hover + .popup, .popup:hover {
+.popup-help:hover > .popup, .popup:hover {
 	display: inline-block;
+	height: auto;
 	cursor: help;
 }

@@ -1,5 +1,6 @@
 window.addEventListener('load', () => {
 	Adventure.addCommandHandler(onCommand);
+	setupGame();
 })
 
 function onCommand(command) {
@@ -20,9 +21,18 @@ function onCommand(command) {
 }
 
 function startScene(command) {
+	// First room
 	let state = Adventure.scene.getState();
+	if( command === 'help' ) {
+		let items = Adventure.items.all();
+		if( items.length > 0 ) {
+			return `Are you lost? Try interacting with the items in the room! For example, the <span class="keyword">${items[0]}</span>.`;
+		} else {
+			return `Are you lost? Read the description of the room. What would you do in that situation?`;
+		}
+	}
 
-	if( command === 'open door' ) {
+	else if( command === 'open door' ) {
 		if( state === 0 ) {
 			Adventure.scene.setState(1);
 			Adventure.scene.modifyDescription(`You are standing inside a small closet. The door is open. You could decide to <span class="keyword">step out</span> at any time. Unless you like it in here.`)
@@ -37,7 +47,7 @@ function startScene(command) {
 		if( state === 0 ) {
 			return `How could you close an already closed door?`;
 		} else {
-			return `You refuse to close the door on moral reasons.`;
+			return `You refuse to close the door for moral reasons.`;
 		}
 	}
 
@@ -56,7 +66,7 @@ function startScene(command) {
 		}
 	}
 
-	else if( command === 'step out' ) {
+	else if( ['step out', 'go out'].includes(command) ) {
 		if( state === 0 ) {
 			return `You thrash about wildly for a moment, but the <span class="keyword">closed door</span> heroically resist your effort.`;
 		} else {
@@ -68,6 +78,7 @@ function startScene(command) {
 
 
 function roomScene(command) {
+	// Second room (victory)
 	let state = Adventure.scene.getState();
 
 	if( command === 'dance' ) {
@@ -85,4 +96,15 @@ function roomScene(command) {
 		Adventure.scene.change('start');
 		return `Overwhelmed by emotions, you retreat to the safety of the closet.`;
 	}
+}
+
+function setupGame() {
+	Adventure.scene.create('start', 'Mystery room',
+		`You awake standing in a small dark room. This room appears very small. Through your senses you detect that there is a <span class="keyword">door</span> right in front of you. The door is, quite obviously, closed.`,
+		[]);
+
+	Adventure.scene.create('room', 'Room',
+		`The room is brightly lit. Freedom at last! <br>Thanks for playing. Feel free to do a victory <span class="keyword">dance</span> or two. And when you're done, make your own game!`,
+		[]);
+	Adventure.scene.change('start');
 }
