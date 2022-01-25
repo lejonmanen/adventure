@@ -98,7 +98,7 @@ const settings = {
 
 // Initialization
 window.addEventListener('load', () => {
-	console.log('hello');
+	console.log('Welcome! Try changing something in the code, or hacking the Adventure object.');
 
 	const textarea = document.getElementById('commands');
 	const messageBox = document.getElementById('messages');
@@ -202,6 +202,7 @@ function printItems(items) {
 }
 
 // Whether to prefix with 'a' or 'an'
+// Not always accurate, but it's better than nothing
 function properArticle(word) {
 	const vowels = 'aeiouy';
 	let first = word.charAt(0);
